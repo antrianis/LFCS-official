@@ -1,21 +1,21 @@
 # Operation of Running Systems
 
-1. [Boot, reboot, and shut down a system safely](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-reboot-and-shut-down-a-system-safely)
-2. [Boot or change system into different operating modes](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-or-change-system-into-different-operating-modes)
-3. [Install, configure and troubleshoot bootloaders](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#install-configure-and-troubleshoot-bootloaders)
-4. [Diagnose and manage processes](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#diagnose-and-manage-processes)
-5. [Locate and analyze system log files](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#locate-and-analyze-system-log-files)
-6. [Schedule tasks to run at a set date and time](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#schedule-tasks-to-run-at-a-set-date-and-time)
+1. [Boot, reboot, and shut down a system safely](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-reboot-and-shut-down-a-system-safely)
+2. [Boot or change system into different operating modes](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-or-change-system-into-different-operating-modes)
+3. [Install, configure and troubleshoot bootloaders](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#install-configure-and-troubleshoot-bootloaders)
+4. [Diagnose and manage processes](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#diagnose-and-manage-processes)
+5. [Locate and analyze system log files](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#locate-and-analyze-system-log-files)
+6. [Schedule tasks to run at a set date and time](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#schedule-tasks-to-run-at-a-set-date-and-time)
 7. [Verify completion of scheduled jobs
-](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#verify-completion-of-scheduled-jobs)
-8. [Update software to provide required functionality and security](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#update-software-to-provide-required-functionality-and-security)
-9. [Verify the integrity and availability of resources](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#verify-the-integrity-and-availability-of-resources)
-10. [Change kernel runtime parameters, persistent and non-persistent](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#change-kernel-runtime-parameters-persistent-and-non-persistent)
-11. [Use scripting to automate system maintenance tasks](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#use-scripting-to-automate-system-maintenance-tasks)
-12. [Manage the startup process and services (In Services Configuration)](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#manage-the-startup-process-and-services-in-services-configuration)
-13. [List and identify SELinux/AppArmor file and process contexts](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#list-and-identify-selinuxapparmor-file-and-process-contexts)
-14. [Manage Software](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#manage-software)
-15. [Identify the component of a Linux distribution that a file belongs to](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#identify-the-component-of-a-linux-distribution-that-a-file-belongs-to)
+](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#verify-completion-of-scheduled-jobs)
+8. [Update software to provide required functionality and security](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#update-software-to-provide-required-functionality-and-security)
+9. [Verify the integrity and availability of resources](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#verify-the-integrity-and-availability-of-resources)
+10. [Change kernel runtime parameters, persistent and non-persistent](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#change-kernel-runtime-parameters-persistent-and-non-persistent)
+11. [Use scripting to automate system maintenance tasks](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#use-scripting-to-automate-system-maintenance-tasks)
+12. [Manage the startup process and services (In Services Configuration)](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#manage-the-startup-process-and-services-in-services-configuration)
+13. [List and identify SELinux/AppArmor file and process contexts](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#list-and-identify-selinuxapparmor-file-and-process-contexts)
+14. [Manage Software](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#manage-software)
+15. [Identify the component of a Linux distribution that a file belongs to](https://github.com/antrianis/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#identify-the-component-of-a-linux-distribution-that-a-file-belongs-to)
 
 ## Boot, reboot, and shut down a system safely
 
@@ -843,4 +843,3 @@ References:
 
 * The cache is normally re-build each time a new package is installed
 
-[Back to top of the page: ⬆️](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#operation-of-running-systems)

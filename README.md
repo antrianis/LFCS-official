@@ -8,9 +8,9 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg">
-  <img src="https://img.shields.io/github/issues-pr/StenlyTU/LFCS-official">
-  <img src="https://img.shields.io/github/stars/StenlyTU/LFCS-official?style=social">
-  <img src="https://img.shields.io/github/forks/StenlyTU/LFCS-official?style=social">
+  <img src="https://img.shields.io/github/issues-pr/antrianis/LFCS-official">
+  <img src="https://img.shields.io/github/stars/antrianis/LFCS-official?style=social">
+  <img src="https://img.shields.io/github/forks/antrianis/LFCS-official?style=social">
 </p>
 
 These are notes taken during preparation for [LFCS exam](https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/) from `Andrew Mallett` course on [Pluralsight](https://app.pluralsight.com/paths/certificate/linux-foundation-certified-system-admin)
@@ -37,8 +37,8 @@ These notes cannot be considered as unique source of information to prepare LFCS
 
 ##  Other repos  ##
 
-* Interactive ***K8s*** training with exercises - https://github.com/StenlyTU/K8s-training-official
+* Interactive ***K8s*** training with exercises - https://github.com/antrianis/K8s-training-official
 
-* Linux Foundation ***LFCE*** knowledge base (READY) - https://github.com/StenlyTU/LFCE-official
+* Linux Foundation ***LFCE*** knowledge base (READY) - https://github.com/antrianis/LFCE-official
 
 :checkered_flag: If you liked the repo please star it :star:

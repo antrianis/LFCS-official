@@ -2,13 +2,13 @@
 
 <img src="https://www.flaticon.com/svg/static/icons/svg/32/32441.svg" width="200" align="right"/></a>
 
-1. [Create, delete, and modify local user accounts](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#create-delete-and-modify-local-user-accounts)
-2. [Create, delete, and modify local groups and group memberships](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#create-delete-and-modify-local-groups-and-group-memberships)
-3. [Manage system-wide environment profiles](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-system-wide-environment-profiles)
-4. [Manage template user environment](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-template-user-environment)
-5. [Configure user resource limits](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#configure-user-resource-limits)
-6. [Manage user privileges](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-user-privileges)
-7. [Configure PAM](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#configure-pam)
+1. [Create, delete, and modify local user accounts](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#create-delete-and-modify-local-user-accounts)
+2. [Create, delete, and modify local groups and group memberships](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#create-delete-and-modify-local-groups-and-group-memberships)
+3. [Manage system-wide environment profiles](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-system-wide-environment-profiles)
+4. [Manage template user environment](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-template-user-environment)
+5. [Configure user resource limits](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#configure-user-resource-limits)
+6. [Manage user privileges](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#manage-user-privileges)
+7. [Configure PAM](https://github.com/antrianis/LFCS-official/blob/main/stuff/UserandGroupManagement.md#configure-pam)
 
 
 ## Create, delete, and modify local user accounts
@@ -304,5 +304,3 @@ Refer to `sudo` configuration
     * Time restriction can be configured in `/etc/security/time.conf`
 
     * Password complexity policies can be configured in `/etc/security/pwquality.conf`
-
-[Back to top of the page: ⬆️](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/UserandGroupManagement.md#user-and-group-management)
