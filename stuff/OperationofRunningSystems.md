@@ -1,7 +1,5 @@
 # Operation of Running Systems
 
-<img src="https://www.flaticon.com/svg/static/icons/svg/126/126502.svg" width="250" align="right"/></a>
-
 1. [Boot, reboot, and shut down a system safely](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-reboot-and-shut-down-a-system-safely)
 2. [Boot or change system into different operating modes](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#boot-or-change-system-into-different-operating-modes)
 3. [Install, configure and troubleshoot bootloaders](https://github.com/StenlyTU/LFCS-official/blob/main/stuff/OperationofRunningSystems.md#install-configure-and-troubleshoot-bootloaders)
@@ -21,12 +19,22 @@
 
 ## Boot, reboot, and shut down a system safely
 
+* `systemctl poweroff`
+* `systemctl reboot`
+* `systemctl hibernate`
+* `echo b > /proc/sysrq-trigger` //dangerous, last option, no file sync etc!
+* `poweroff`
+* `reboot`
 * `shutdown -h now` - shutdown
 * `shutdown -r now` - reboot
+
+
 
 ## Boot or change system into different operating modes
 
 ***Boot sequence:***
+
+* BIOS UEFI (firmware) -> Hard Disk (or from the network a bit different) -> bootsector (first area in harddrive) -> inside that there is the bootloader (its software, called GRUB) and its responsible for loading the OS -> GRUB will load the kernel -> Kernel uses initramfs (small boot time filesystem to add drivers and such to the kernel) -> Systemd (manager of everything) -> services, login shell etc.
 
 * POST (PowerOn Self Test) -> Find disk -> Inside disk there's bootloader -> bootloader load kernel -> kernel load init process
 
@@ -39,19 +47,36 @@
 
 * Previous versions of Red Hat Enterprise Linux, which were distributed with SysV init or Upstart, implemented a predefined set of runlevels that represented specific modes of operation. These runlevels were numbered from 0 to 6 and were defined by a selection of system services to be run when a particular runlevel was enabled by the system administrator. In CentOS and Red Hat Enterprise Linux 7, the concept of runlevels has been replaced with systemd targets.
 
+* Systemd is event driven
+
 * Systemd targets are represented by target units. Target units end with the .target file extension and their only purpose is to group together other systemd units through a chain of dependencies. 
 
 * Systemd units are the objects that systemd knows how to manage. These are basically a standardized representation of system resources that can be managed by the suite of daemons and manipulated by the provided utilities.
+
+* Default units are in /usr/lib/systemd/system, custom units are in /etc/systemd
 
 * Systemd units in some ways can be said to similar to services or jobs in other init systems. However, a unit has a much broader definition, as these can be used to abstract services, network resources, devices, filesystem mounts, and isolated resource pools.
 
 * Systemd was designed to allow for better handling of dependencies and have the ability to handle more work in parallel at system startup.
 
+
+
+
 ***Systemd commands:***
+
+* `systemctl -t help` get unit types 
+
+* Services and units can belong to a target. 
 
 * `systemctl get-default` - It shows default target.
 
+* `systemctl isolate multi-user.target` - switch to a different target. The needed units are compared with the current target's units.
+
+* `systemctl start graphical.target` 
+
 * `systemctl list-units --type target --all` - It shows all available targets.
+
+* `systemctl list-units` all the units that have been started + order
 
 * `systemctl set-default multi-user.target/runlevel3` - Set multi-user target as default.
 
@@ -59,16 +84,16 @@
 
 * If during boot ESC is pressed the grub2 prompt will be showed.
 
-* Highlight a kernel and press 'e'.
+* Highlight a kernel and press 'e' (e for edit).
 
 * Now is it possible to modify the boot parameter used to load the kernel. 
 
-  **NOTE**: the changes are not persistent!
+  **NOTE**: the changes are not persistent! Persistent changes need to be written to /etc/default/grub
 
   E.g `systemd.unit=emergency.target` can be added to boot system in emergency mode. NOTE: in this modality disk is mounted read only, to mount it read/write, after boot execute `mount`
   `-o remount,rw /`
 
-* When the parameter change is end, press 'Ctrl + x' to boot system
+* When the parameter change is end, press 'Ctrl + x' to boot system (not enter)
 
 References:
 
@@ -101,7 +126,7 @@ The default bootloader in Centos7 is GRUB2.
 
 * When changes were made to /etc/default/grub they must be inserted in configuration file used directly by Grub2 which is **/boot/grub2/grub.cfg**. To do this execute:
 
-  `grub2-mkconfig -o /boot/grub2/grub.cfg`
+  `grub2-mkconfig -o /boot/grub2/grub.cfg` -> It will write the new initramfs (initrd) from the /etc/default/grub
 
   `grubby --default-kernel` -> Show the default kernel.
 
@@ -114,21 +139,53 @@ The default bootloader in Centos7 is GRUB2.
   `grubby --remove-args='rhgd quiet' --update-kernel /boot/vmlinux...` -> Update kernel parameters.
   
 ***Troubleshooting:***
+  * While booting, kernel options can be used to alter the kernel behavior:
+    * ```rescue mode``` - minimal mode, with minimum amount of services loaded. If there is a problem during boot procedure, you can easily fix it.  
 
-  * ```rescue mode``` - minimal mode, with minimum amount of services loaded. If there is a problem during boot procedure, you can easily fix it.  
+      ![img](img26.jpeg)
 
-    ![img](https://github.com/Bes0n/LFCS/blob/master/images/img26.JPG)
+      - once you are done press **Ctrl + D** to continue booting.
 
-    - once you are done press **Ctrl + D** to continue booting.
+    * ```emergency mode``` -  In contrast to the rescue mode, nothing is started in the emergency mode. No services are started, no mount points are mounted, no sockets are established, nothing. All you will have is just a raw shell. Emergency mode is suitable for debugging purposes.
 
-  * ```emergency mode``` -  In contrast to the rescue mode, nothing is started in the emergency mode. No services are started, no mount points are mounted, no sockets are established, nothing. All you will have is just a raw shell. Emergency mode is suitable for debugging purposes.
+      ![img](img27.jpeg)
 
-    ![img](https://github.com/Bes0n/LFCS/blob/master/images/img27.JPG)
+      - `mount -o remount,rw /` - puts your filesystem in read-write mode. Because in emergency state your file system by default in read-only mode
+    
+    * ```rd.break``` - in exceptional cases start in initrd mode. To reset the root password: chroot /sysroot; passwd newrootpassw; exit; poweroff
 
-    - `mount -o remount,rw /` - puts your filesystem in read-write mode. Because in emergency state your file system by default in read-only mode
+    * use a rescue disk or image (if you cannot access the bootloader anymore). Press F2, select CD-ROM drive, access rescue system (troubleshooting->rescue a centos system), it will boot a kernel and initramfs from the rescue disk, so i can access what is in my root file system. chroot /mnt/sysimage //direct access to everything that is on my system
 
 
 ## Diagnose and manage processes
+***top***:
+
+```
+top - 15:07:30 up 158 days,  3:54,  1 user,  load average: 0.06, 0.05, 0.08
+Tasks: 390 total,   1 running, 389 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  0.0 us,  0.3 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu4  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 49264188 total, 15899672 free,  3673592 used, 29690924 buff/cache
+KiB Swap: 54525944 total, 54525944 free,        0 used. 43251484 avail Mem
+```
+
+* load average: x y z - the average amount of runnable process e.g. 2.14 processes
+* press 1 to see cpus
+  * us = userland 
+  * syS = kernelland - drivers
+  * id = idle - amount of time processor is doing nothing, 0 = very busy
+  * wa = waiting I/O
+* KiB Mem: 49GB 15GBFree 29GB(good to be ~30%)
+* Swap overflow buffer, physical space emulates ram (slow) 0 used.
+
+* top -u user
+* `F` - fields available
+* `shift + F` - then chose the sorting and the fields
+* `z` - use coloring
+* `W` - write the current settings .toprc
 
 ***mpstat:***
 
@@ -148,7 +205,9 @@ The default bootloader in Centos7 is GRUB2.
 
 * `ps` Processes of which I'm owner
 
-* `ps aux` All processes.
+* `ps -ef` show parent process id 
+
+* `ps aux` All processes
 
   It will print:
 
@@ -168,7 +227,7 @@ The default bootloader in Centos7 is GRUB2.
   * tty - On which process is running. 
     * **NOTE**: *?* means that isn't connect to a tty
 
-  * stat - process state
+  * stat - process state( terminating, zombie etc.)
 
   * start- starting time or date of the process
 
@@ -214,6 +273,10 @@ The default bootloader in Centos7 is GRUB2.
 * `fg pid` - To return a process in foreground 
 
 ***Process priority:***
+* Two type of processes: real time (kernel processes) and normal processes.
+
+* Same priority == kernel ensures fairness of runtime
+
 
 * `ps -eo pid,nice,command`
   * nice (NI) is the process priority
@@ -231,6 +294,8 @@ The default bootloader in Centos7 is GRUB2.
 * `renice` re-assign priority to a process
 
   * `renice -n value pid`
+
+* from `top` command press `r` and type pid
 
 ***Signals:***
 
@@ -308,11 +373,27 @@ References:
 
 ## Schedule tasks to run at a set date and time
 
-* Daemon that schedule tasks, called jobs, to run at a set date and time is cron
+1. `Cron` the old classical solution, reoccuring tasks
+  * crond deamon
+  * crontab -e to edit
+  * systemctl status crond
+  * man 5 crontab
+
+2. `at` for tasks to run once only
+
+3. `systemd timers` newer solution alternative to cron jobs systemd timer .timer systemctl
+  * /user/lib/systemd/system; ls *timer
+  * systemctl status fstrim.timer
+  * systemctl enable --now fstrim.timer
+  * man k -systemd | grep timer
+
+***Cron***
+
+* Cron, Daemon that schedule tasks, called jobs, to run at a set date and time is cron
 * The schedule of various tasks depend by configuration contained in below files/directories:
   * /etc/crontab
     * Normally isn't edited
-      * **NOTE**: It's content can be used as remainder of cron files syntax
+      * **NOTE**: It's content can be used as reminder of cron files syntax
     * Each row is a task that must be executed in a scheduled way
     * A special syntax indicates the schedule of each commands
   * /etc/cron.d
@@ -528,7 +609,7 @@ References:
 
 * `systemctl disable sshd` -> Disable the execution of service at bootstrap.
 
-* `systemctl enable sshd` -> Enable the execution of service at bootstrap.
+* `systemctl enable sshd` -> Enable the execution of service at bootstrap. (Start and stop are for runtime, enable/disable are for persistency)
 
 * `systemctl is-enabled sshd` -> Check if daemon is enable or disabled in bootstrap sequence.
 
@@ -539,6 +620,8 @@ References:
 * `systemctl cat sshd` -> Display sshd unit file that systemd has loaded into its system.
 
 * `systemctl edit --full sshd` -> Will open editor to edit service file.
+
+* `systemctl deamon-reload` -> After changes
 
 * `systemctl show sshd.service` -> This will display a list of properties that are set for the specified unit.
 
@@ -752,7 +835,7 @@ References:
 
 * This info is contained in a library cache
 
-* The library cache can be re-build using `ldconfing`
+* The library cache can be re-build using `ldconfig`
 
 * The library cache is in /etc/ld.so.cache
 

@@ -18,13 +18,13 @@
 
 ## Log into local & remote graphical and text mode consoles
 
-Basic concept to know:
+Basic concepts to know:
 
 * **Text Terminal**: text input/output environment.
   * Originally, they meant a piece of equipment through which you could interact with a computer: in the early days of Unix, that meant a teleprinter-style device resembling a typewriter, sometimes called a teletypewriter, or “tty” in shorthand
   * Tty were used to establish a connection to a mainframe computer and share operating system provided by it
   * A typical text terminal produces input and displays output and errors
-* **Console**: terminal in modern computers that don't use mainframe but have an own operating system. It is generally a terminal in the physical sense that is, by some definition, the primary terminal directly connected to a machine. 
+* **Console**: terminal in modern computers that don't use mainframe but have their own operating system. It is generally a terminal in the physical sense that is, by some definition, the primary terminal directly connected to a machine. 
   * The console appears to the operating system "like" a remote terminal
   * In Linux and FreeBSD, the console, in realty, appears as several terminals (*ttys*) called *Virtual Consoles*
 * **Virtual Consoles**: to provide several text terminals on a single computer
@@ -63,12 +63,28 @@ root     tty1                      23:40   60.00s  0.01s  0.01s -bash
 root     pts/0    192.168.0.34     23:41    1.00s  0.02s  0.00s w
 ~~~
 
+To find on which tty you are logged in currently. 
+~~~bash
+$tty
+/dev/pts/3
+~~~
+
 First column shows  which user is logged into system and the second one to which terminal.
 
 * For Virtual Console in terminal is showed tty1, tty2 etc.
 
 * For ssh remote sessions (pseudo-terminal) in terminal is showed pts/0, pts/1 etc.
 * :0 is for X11 server namely used for graphical login
+
+To move around the graphical and the virtual consoles
+```
+Ctrl+Alt+F1: Returns you to the graphical desktop environment log in screen.
+Ctrl+Alt+F2: Returns you to the graphical desktop environment.
+Ctrl+Alt+F3: Opens TTY 3.
+Ctrl+Alt+F4: Opens TTY 4.
+Ctrl+Alt+F5: Opens TTY 5.
+Ctrl+Alt+F6: Opens TTY 6.
+```
 
 References:
 * [https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line](https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line)
@@ -86,9 +102,9 @@ References:
 
 * Base syntax: find PATH PARAMETERS
 
-* `find /etc -name "\*host*"` - Search in /etc all file/directories with host in their name. \* is a wildcard
+* `find /etc -name "*host*"` - Search in /etc all file/directories with host in their name. \* is a wildcard
 
-* `find . -perm 777 -exec rm -f '{}' \;` - Search from current position all files/directories with permissions 777 and after remove them
+* `find . -perm 777 -exec rm -f {} \;` - Search from current position all files/directories with permissions 777 and after remove them
 
   `-exec` uses the result of find to do something
 
@@ -97,6 +113,10 @@ References:
   The exec's command must be contained between `-exec` and `\;`. 
 
   `;` is treated as end of command character in bash shell. For this I must escape it with \\. If escaped it will be interpreted by find and not by bash shell.
+  
+  You can have multiple exec commands in one find invocation
+  `find . perm 777 -exec ls {} \; -exec cat {} \;`
+
 
 * Some parameter accepts value n with + or - in front. The meaning is:
 
@@ -106,11 +126,11 @@ References:
 
 * `find /etc -size -100k` -  Search in /etc all files/directories with size less of 100 kilobytes
 
-* `find . -maxdepth 3 -type f -size +2M` - Search starting from current position, descending maximum three directories levels, files with size major of 2 megabyte
+* `find . -maxdepth 3 -type f -size +2M` - Search starting from current position, descending maximum three directories levels, files with size major than 2 megabyte
 
 * `find . \( -name name1 -o -name name2 \)`
-
-  * `-o` or, it is used to combine two conditions. \ is escape to avoid that ( or ) will be interpreted by bash shell
+  * `-o` or, it is used to combine two conditions. 
+  You can escape using \ to avoid that ( or ) will be interpreted by bash shell, but in this case parenthesis are not needed.
 
 * `find . -samefile file` - Find all files that have same i-node of file
 
@@ -119,15 +139,37 @@ References:
 
 * `find . -iname name` - Search name ignoring case
 
-* `find . -perm 222` - Find all files with permissions equal to 222. E.g. only file with permissions 222 will be showed
+* `find . -perm 222` - Find all files with permissions exactly equal to 222. E.g. only file with permissions 222 will be showed
 
 * `find . -perm -222` - Find all files with at least permissions 222. E.g. 777 match as valid.
 
-* `find . -perm /222` -  Find all files with write for owner or write for group or write for others (at least one)
+* `find . -perm +222` -  Find all files with write for owner or write for group or write for others (at least one)
 
 * `find . -perm -g=w` - Find all files with at least  permission write for group
 
 * `find . -atime +1` -  Show all files accessed at least two days ago (more than 24 hours)
+
+Summary of useful parameters
+```
+anewer filename
+atime +-n days
+group name
+inum n
+exec cmd \;
+links +-n
+mtime +-n days
+name '?[]*'
+newer filename
+nogroup
+nouser
+perm +- mode
+size +-n[ckMG]
+type [bcdflps]
+user name
+ok like exec but ask for confirmation for each exec
+print depends on the position in the cmd, print filename
+print0 like print without new line. it can be access as 0 at xargs.
+```
 
 ## Evaluate and compare the basic file system features and options
 
@@ -615,7 +657,7 @@ References:
 
 ## Read, and use system documentation
 
-* `commad --help` - Show help of a command.
+* `command --help` - Show help of a command.
 
 * `man command` - Show command manual.
 
@@ -625,7 +667,7 @@ References:
 
   * `man -f printf` - Show man sections for the command. Doing the same as whatis.
 
-* `/usr/share/doc` - It contains configuration files examples.
+* `/usr/share/doc` - It contains configuration file examples.
 
 * `info command` - It shows info document.
 

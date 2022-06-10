@@ -74,6 +74,8 @@
 
 * Before restarting the service check the config: `named-checkconf -z /etc/named.conf`
 
+* `systemctl status named` -> Status of bind server
+
 * `systemctl restart named` -> Restart bind server
 
 * Test it: `dig pluralsight.com @127.0.0.1`
