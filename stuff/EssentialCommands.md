@@ -95,6 +95,8 @@ References:
 * [https://en.wikipedia.org/wiki/System_console](https://en.wikipedia.org/wiki/System_console)
 * [https://unix.stackexchange.com/questions/60641/linux-difference-between-dev-console-dev-tty-and-dev-tty0](https://unix.stackexchange.com/questions/60641/linux-difference-between-dev-console-dev-tty-and-dev-tty0)
 
+## Awk util
+* `ss -ltunp | awk '{ print $5}' | awk -F":" '{print $2}' > /home/bob/incoming.txt`
 
 ## Search for files
 

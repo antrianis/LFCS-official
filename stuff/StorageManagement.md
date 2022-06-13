@@ -1,7 +1,5 @@
 # Storage Management
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Storage_icon_of_three_disks.svg/1044px-Storage_icon_of_three_disks.svg.png" width="300" align="right"/></a>
-
 1. [List, create, delete, and modify physical storage partitions](https://github.com/antrianis/LFCS-official/blob/main/stuff/StorageManagement.md#list-create-delete-and-modify-physical-storage-partitions)
 
 2. [Manage and configure LVM storage](https://github.com/antrianis/LFCS-official/blob/main/stuff/StorageManagement.md#manage-and-configure-lvm-storage)

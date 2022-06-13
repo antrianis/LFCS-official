@@ -1,7 +1,5 @@
 # Service Configuration
 
-<img src="https://www.flaticon.com/svg/static/icons/svg/263/263074.svg" width="250" align="right"/></a>
-
 1. [Configure a caching DNS server](https://github.com/antrianis/LFCS-official/blob/main/stuff/ServiceConfiguration.md#configure-a-caching-dns-server)
 2. [Maintain a DNS zone](https://github.com/antrianis/LFCS-official/blob/main/stuff/ServiceConfiguration.md#maintain-a-dns-zone)
 3. [Configure email aliases](https://github.com/antrianis/LFCS-official/blob/main/stuff/ServiceConfiguration.md#configure-email-aliases)
@@ -18,8 +16,6 @@
 
 
 ## Configure a caching DNS server
-
-![DNS Resolution](http://web.deu.edu.tr/doc/oreily/networking/dnsbind/figs/dns3_0212.gif)
 
 * Linux DNS server is *bind*
 
@@ -491,7 +487,7 @@ default /var/log/httpd. you need to add this context: *httpd_log_t*
   * Run container with terminal
   * `-i` connects standard input to container
   * `-t` get pseudo terminal
-  *  **NOTA**: `ctrl+p+q` exit form terminal without terminate container execution
+  *  **NOTE**: `ctrl+p+q` exit form terminal without terminate container execution
 
 * `docker run -d centos:7 ping 127.0.0.1` -> Container will be executed in detached mode. This means that is in execution in background and not attached to Bash shell
 

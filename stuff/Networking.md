@@ -1,7 +1,5 @@
 # Networking
 
-<img src="https://image.flaticon.com/icons/png/512/36/36181.png" width="150" align="right"/></a>
-
 1. [Configure networking and hostname resolution statically or dynamically](https://github.com/antrianis/LFCS-official/blob/main/stuff/Networking.md#configure-networking-and-hostname-resolution-statically-or-dynamically)
 2. [Configure network services to start automatically at boot](https://github.com/antrianis/LFCS-official/blob/main/stuff/Networking.md#configure-network-services-to-start-automatically-at-boot)
 3. [Implement packet filtering](https://github.com/antrianis/LFCS-official/blob/main/stuff/Networking.md#implement-packet-filtering)
@@ -14,54 +12,60 @@
 
 * `ip addr show` -> Show IP addresses configuration. Short syntax -  `ip a s` 
 
-* `ip netns` -> Show the available network namespaces.
+* `ip link show` -> Show interfaces. Short syntax -  `ip l s` . interface begins: e-wired, w-wireless.
 
-* `nmtui`
+* `ip route show` -> `ip r show` address of default gateway. 
 
-  *Network Manager Text User Interface* - Graphical interface to manage network connections configuration
+* All network configuration will be stored in `/etc/sysconfig/network-scripts` -> ifcfg-ethernet_adapter_name, route-ethernet_adapter_name
 
+* `nmtui` *Network Manager Text User Interface*
+
+   - Graphical interface to manage network connections configuration
+  * `sudo nmtui edit eth1`
   * Manual means that IP will be configured manually
   * Automatic means that will be used DHCP protocol
-  * **NOTE**: IP must be inserted with syntax IP/NETMASK (e.t. 192.168.0.2/24)
+  * **NOTE**: IP must be inserted with syntax CIDR IP/NETMASK (e.t. 192.168.0.2/24)
 
-
-* All network configuration will be stored in `/etc/sysconfig/network-scripts`
+* `nmcli` After making changes using nmtui you need to apply the setting usings. `sudo nmcli device reapply enps03`
 
 * If there is need to change IP configuration of an interface without using `nmtui` remember to shutdown interface, change IP, restart interface
   * `ip link set eth0 down` Shutdown interface eth0
   * `ip addr add 192.168.0.2/24 dev eth0` Assign IP 192.168.0.2/24 to interface eth0
   * `ip link set eth0 up` Restart interface eth0
 
+* `ip netns` -> Show the available network namespaces.
+
 ***Hostname & Resolving:***
 
 * There are 3 different hostnames: `static`, `transient` and `pretty` hostname.
 
-* The hostname can be changed editing `/etc/hostname`.
-
-  * `hostname` -> show current hostname.
-  * Alternative: `hostnamectl set-hostname your-new-hostname` -> set hostname equal to your-new-hostname.
-  * Reboot is required to see new hostname applied.
-
-* In `/etc/hosts` is configured a name resolution that take precedence of DNS - configurable in `/etc/nsswitch.conf`
-
+* Static config for hosts instead of dynamic. In `/etc/hosts` configure a name resolution that take precedence of DNS - configurable in `/etc/nsswitch.conf`
   * It contains static DNS entry.
 
   * It is possible add hostname to row for 127.0.0.1 resolution, or insert a static IP configured on principal interface equal to hostname.
 
   * Alias can be added following this format: **IP FQDN ALIAS**.
 
-*  In `/etc/resolv.conf` there are configured DNS servers entry.
 
+* The hostname can be changed editing `/etc/hostname`.
+
+  * `hostname` -> show current hostname.
+  * `hostnamectl`
+  * Alternative: `hostnamectl set-hostname your-new-hostname` -> set hostname equal to your-new-hostname.
+  * Reboot is required to see new hostname applied.
+
+* In `cat /etc/resolv.conf` -> which DNS resolver we use
 * It is possible to insert more than one *nameserver* as backup (primary and secondary).
 
 * Use: `dig www.pluralsight.com` -> to resolve the site and see the IP address.
 
 ## Configure network services to start automatically at boot
 
+
 Network Manager
 
 * Its purpose is to automatically detect, configure, and connect to a network whether wired or wireless such as VPN, DNS, static routes, addresses, etc which is why you'll see #Configured by NetworkManager in /etc/resolv.conf, for example. Although it will prefer wired connections, it will pick the best known wireless connection and whichever it deems to be the most reliable. It will also switch over to wired automatically if it's there.
-  It's not necessary and many (including me) disable it as most would rather manage their own network settings and don't need it done for them.
+  It's not necessary and many disable it as most would rather manage their own network settings and don't need it done for them.
 * `systemctl stop NetworkManager.service`
 * `systemctl disable NetworkManager.service`
 
@@ -70,9 +74,20 @@ Network
 * `systemctl status network` -> to check network configuration status.
 * `systemctl restart network` -> to reload network configuration.
 
+Configure interface to autoconnect. Use the connection name in nmcli
+  * `nmcli connection show`
+  * `sudo nmcli connection modify enp0s3 autoconnect yes`
+
 References:
 
 * [https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7](https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7)
+
+## Checking networking services
+* `sudo ss -ltunp`, l-listening, -t-tcp, u-udp, n-numeric, p-processes
+* `systemctl stop chronyd.service` start,enable,disable
+* `ps 1031`
+* `lsof -p 1031` - files open by this pid
+* `netstat -ltunp` - same as ss, better maybe not available by default
 
 ## Implement packet filtering
 
